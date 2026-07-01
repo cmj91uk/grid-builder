@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf'
 import type { BoardConfig, GridCell } from '../types/board'
+import { getProxiedImageUrl } from './proxyUrls'
 
 const PAGE_MARGIN_MM = 12
 const CELL_PADDING_MM = 2
@@ -64,8 +65,10 @@ function rasterizeImageSource(source: string): Promise<RasterizedImage | null> {
 }
 
 async function loadImageForPdf(url: string): Promise<RasterizedImage | null> {
+  const fetchUrl = getProxiedImageUrl(url)
+
   try {
-    const response = await fetch(url)
+    const response = await fetch(fetchUrl)
     if (response.ok) {
       const blob = await response.blob()
       const dataUrl = await blobToDataUrl(blob)
@@ -78,7 +81,7 @@ async function loadImageForPdf(url: string): Promise<RasterizedImage | null> {
     // Fall through to direct URL rasterization.
   }
 
-  return rasterizeImageSource(url)
+  return rasterizeImageSource(fetchUrl)
 }
 
 function drawGridLines(

@@ -72,8 +72,9 @@ interface ThrottledResponse {
   throttled: true
 }
 
-const API_BASE =
-  import.meta.env.VITE_OPENSYMBOLS_API ?? 'https://www.opensymbols.org/api/v2'
+import { getApiBase } from '../lib/proxyUrls'
+
+const API_BASE = getApiBase()
 
 export class OpenSymbolsError extends Error {
   status?: number
