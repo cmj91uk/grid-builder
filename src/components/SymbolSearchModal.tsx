@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { OpenSymbolsError, type OpenSymbol } from '../api/opensymbols'
 import { useAuth } from '../context/AuthContext'
+import { inputClassNameCompact, outlineButtonClassName } from '../lib/uiClasses'
 import { SearchResultsGrid } from './SearchResultsGrid'
 
 interface SymbolSearchModalProps {
@@ -110,12 +111,11 @@ export function SymbolSearchModal({
     searchInputRef.current?.focus()
   }
 
-  const inputClassName =
-    'h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-base text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20'
+  const inputClassName = inputClassNameCompact
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 dark:bg-black/60"
       onClick={onClose}
       role="presentation"
     >
@@ -123,18 +123,18 @@ export function SymbolSearchModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="symbol-search-title"
-        className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-6 shadow-xl"
+        className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900 dark:shadow-black/40"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-start justify-between gap-4">
           <div>
             <h2
               id="symbol-search-title"
-              className="text-xl font-semibold text-slate-900"
+              className="text-xl font-semibold text-slate-900 dark:text-slate-100"
             >
               {hasExistingSymbol ? 'Edit cell' : 'Choose a symbol'}
             </h2>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               {hasExistingSymbol
                 ? 'Update the label, replace the symbol, or remove it to start fresh.'
                 : 'Search OpenSymbols and click a result to place it in this cell.'}
@@ -144,7 +144,7 @@ export function SymbolSearchModal({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="min-h-11 min-w-11 rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-50"
+            className={`${outlineButtonClassName} min-w-11 px-0`}
           >
             ✕
           </button>
@@ -154,7 +154,7 @@ export function SymbolSearchModal({
           <div className="space-y-2">
             <label
               htmlFor="modal-label"
-              className="block text-sm font-medium text-slate-700"
+              className="block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Label (optional)
             </label>
@@ -181,7 +181,7 @@ export function SymbolSearchModal({
               <button
                 type="button"
                 onClick={handleRemoveSymbol}
-                className="min-h-11 rounded-lg border border-red-200 px-4 text-sm font-medium text-red-700 transition hover:border-red-300 hover:bg-red-50"
+                className="min-h-11 rounded-lg border border-red-200 px-4 text-sm font-medium text-red-700 transition hover:border-red-300 hover:bg-red-50 dark:border-red-900 dark:text-red-300 dark:hover:border-red-700 dark:hover:bg-red-950"
               >
                 Remove symbol
               </button>
@@ -191,7 +191,7 @@ export function SymbolSearchModal({
           <div className="space-y-2">
             <label
               htmlFor="modal-search"
-              className="block text-sm font-medium text-slate-700"
+              className="block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Search symbols
             </label>
@@ -220,18 +220,20 @@ export function SymbolSearchModal({
         {error && (
           <p
             role="alert"
-            className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+            className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300"
           >
             {error}
           </p>
         )}
 
         {loading && (
-          <p className="mt-4 text-center text-sm text-slate-500">Loading symbols…</p>
+          <p className="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
+            Loading symbols…
+          </p>
         )}
 
         {!loading && hasSearched && symbols.length === 0 && !error && (
-          <p className="mt-4 text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
             No symbols found. Try a different search term.
           </p>
         )}

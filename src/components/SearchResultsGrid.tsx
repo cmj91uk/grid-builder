@@ -34,7 +34,7 @@ export function SearchResultsGrid({
             type="button"
             onClick={() => onSelect(symbol)}
             title={symbol.name}
-            className="flex aspect-square items-center justify-center rounded-lg border border-slate-200 bg-slate-50 p-2 transition hover:border-violet-400 hover:bg-violet-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
+            className="flex aspect-square items-center justify-center rounded-lg border border-slate-200 bg-slate-50 p-2 transition hover:border-violet-400 hover:bg-violet-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-violet-500 dark:hover:bg-violet-950"
           >
             <img
               src={symbol.image_url}
@@ -55,18 +55,18 @@ export function SearchResultsGrid({
             type="button"
             onClick={() => onPageChange(safePage - 1)}
             disabled={safePage <= 1}
-            className="min-h-11 min-w-11 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 transition enabled:hover:border-violet-300 enabled:hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="min-h-11 min-w-11 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 transition enabled:hover:border-violet-300 enabled:hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-200 dark:enabled:hover:border-violet-500 dark:enabled:hover:text-violet-300"
           >
             Previous
           </button>
-          <span className="text-sm text-slate-600">
+          <span className="text-sm text-slate-600 dark:text-slate-400">
             Page {safePage} of {totalPages}
           </span>
           <button
             type="button"
             onClick={() => onPageChange(safePage + 1)}
             disabled={safePage >= totalPages}
-            className="min-h-11 min-w-11 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 transition enabled:hover:border-violet-300 enabled:hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="min-h-11 min-w-11 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 transition enabled:hover:border-violet-300 enabled:hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-200 dark:enabled:hover:border-violet-500 dark:enabled:hover:text-violet-300"
           >
             Next
           </button>

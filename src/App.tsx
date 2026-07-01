@@ -2,8 +2,11 @@ import { useState } from 'react'
 import type { OpenSymbol } from './api/opensymbols'
 import { BoardGrid } from './components/BoardGrid'
 import { BoardSetup } from './components/BoardSetup'
+import { ThemeToggle } from './components/ThemeToggle'
 import { SymbolSearchModal } from './components/SymbolSearchModal'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
+import { outlineButtonClassName } from './lib/uiClasses'
 import {
   createEmptyBoard,
   parseGridDimension,
@@ -132,23 +135,24 @@ function AppContent() {
   return (
     <main className="flex min-h-svh flex-col items-center px-4 py-10">
       <div className="relative w-full max-w-5xl space-y-8">
-        {isAuthenticated && (
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="absolute right-0 top-0 min-h-11 rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:border-red-300 hover:text-red-700"
-          >
-            Logout
-          </button>
-        )}
+        <div className="absolute right-0 top-0 flex items-center gap-2">
+          <ThemeToggle />
+          {isAuthenticated && (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={`${outlineButtonClassName} hover:border-red-300 hover:text-red-700 dark:hover:border-red-500 dark:hover:text-red-400`}
+            >
+              Logout
+            </button>
+          )}
+        </div>
 
-        <header
-          className={`space-y-2 text-center ${isAuthenticated ? 'pt-12' : ''}`}
-        >
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+        <header className="space-y-2 pt-12 text-center">
+          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
             Grid Builder
           </h1>
-          <p className="text-base text-slate-600 sm:text-lg">
+          <p className="text-base text-slate-600 sm:text-lg dark:text-slate-400">
             {boardConfig
               ? 'Click a cell to search and add a symbol'
               : 'Set up your board to get started'}
@@ -179,7 +183,7 @@ function AppContent() {
               <button
                 type="button"
                 onClick={handleNewBoard}
-                className="min-h-11 rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:border-violet-300 hover:text-violet-700"
+                className={outlineButtonClassName}
               >
                 New board
               </button>
@@ -187,7 +191,7 @@ function AppContent() {
             {exportError && (
               <p
                 role="alert"
-                className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300"
               >
                 {exportError}
               </p>
@@ -219,9 +223,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 
